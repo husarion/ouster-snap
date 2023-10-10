@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# Reset config variable
+snapctl set config="$SNAP_COMMON/config/driver_params.yaml"
+
 # Make sure the folder exists
 mkdir -p $SNAP_COMMON/config
 

@@ -8,9 +8,9 @@ READY=true
 if [ -n "${CONFIG_FILE}" ]; then
     if ! [[ -r "${CONFIG_FILE}" && -f "${CONFIG_FILE}" ]]; then
         >&2 echo "'$CONFIG_FILE' is not a supported value for config."
-        logger -t ${SNAP_NAME} "'$CONFIG_FILE' is not a supported value for config."
-        # clean the config file
-        snapctl get config!
+        logger -t ${SNAP_NAME} "'$CONFIG_FILE' is not a supported value for config. Restetting the config file"
+        # reset the config file
+        . $SNAP/usr/bin/reset_config.sh
         exit 1
     fi
 fi
@@ -24,7 +24,7 @@ if [ -n "${SENSOR_HOSTNAME}" ]; then
     fi
 fi
 
-if ! $($SNAP/usr/bin/is_ip_set.sh); then
+if ! $($SNAP/usr/bin/is_sensor_hostname_set.sh); then
     READY=false
 fi
 
