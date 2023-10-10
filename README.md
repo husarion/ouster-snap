@@ -43,7 +43,7 @@ snap connect ouster-ros:ros-humble ros-humble-ros-base
 ## Start
 
 This application runs as a daemon. To start it connect the `ros-humble` interface, set `sensor-hostname`.
-Next launch it aas follows.
+Next launch it as follows.
 ```bash
 snap start ouster-ros
 ```
