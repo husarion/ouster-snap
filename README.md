@@ -55,7 +55,6 @@ If you want to reset it, do it with following command,
 ouster-ros.reset-config 
 ```
 
-
 ### Parameters
 
 Depending on the behaviour you expect from the sensor you can change the configuration.
