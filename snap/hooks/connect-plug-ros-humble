@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+READY=true
+
+if ! $($SNAP/usr/bin/are_interfaces_plugged.sh); then
+    READY=false
+fi
+
+if ! $($SNAP/usr/bin/is_sensor_hostname_set.sh); then
+    READY=false
+fi
+
+# now we can start the service since the parameters are set and
+# interfaces are connected
+if [ "${READY}" = true ] && snapctl services ${SNAP_NAME}.${SNAP_NAME} | grep -q inactive; then
+    snapctl start --enable ${SNAP_NAME}.${SNAP_NAME} 2>&1 || true
+fi

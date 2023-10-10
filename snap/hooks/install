@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+. $SNAP/usr/bin/reset_config.sh
+
+snapctl set config="$SNAP_COMMON/config/driver_params.yaml"
+
+if ! snapctl is-connected ros-humble; then
+  logger -t ${SNAP_NAME} "Plug 'ros-humble' isn't connected, \
+    please run: snap connect $SNAP_NAME:ros-humble <providing-snap>"
+fi
