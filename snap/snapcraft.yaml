@@ -7,11 +7,11 @@ description: |
 
   Upon installation, the snap must be configured:
 
-    sudo snap set sensor-hostname="<lidar sensor hostname>"
+    sudo snap set husarion-ouster-ros2 sensor-hostname="<lidar sensor hostname>"
 
   Optional parameter of config file path can be specified by:
 
-    sudo snap set config="<lidar config file>"
+    sudo snap set husarion-ouster-ros2 config="<lidar config file>"
 
   Furthermore its interfaces must be connected:
 
@@ -48,12 +48,12 @@ parts:
     plugin: colcon
     colcon-cmake-args:
       - -DCMAKE_BUILD_TYPE=Release
-    source: https://github.com/ouster-lidar/husarion-ouster-ros2.git
+    source: https://github.com/ouster-lidar/ouster-ros.git
     source-tag: 0.10.4
     override-pull: |
         craftctl default
 
-        version="$(grep -oP '(?<=<version>).*?(?=</version>)' $CRAFT_PART_SRC_WORK/husarion-ouster-ros2/package.xml)"
+        version="$(grep -oP '(?<=<version>).*?(?=</version>)' $CRAFT_PART_SRC_WORK/ouster-ros/package.xml)"
         craftctl set version="$version"
 
   local-files:

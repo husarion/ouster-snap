@@ -8,7 +8,9 @@ else
     logger -t ${SNAP_NAME} "Connecting to the sensor at hostname: '${SENSOR_HOSTNAME}'"
 fi
 
+CONFIG_FILE="$(snapctl get config)"
+
 OUT_PARAMS_FILE=/tmp/driver_params.yaml
-yq '.ouster/os_driver.ros__parameters.sensor_hostname = env(SENSOR_HOSTNAME)' $CONFIG > $OUT_PARAMS_FILE
+yq '.ouster/os_driver.ros__parameters.sensor_hostname = env(SENSOR_HOSTNAME)' $CONFIG_FILE > $OUT_PARAMS_FILE
 
 ros2 launch ouster_ros driver.launch.py params_file:=$OUT_PARAMS_FILE viz:=false
