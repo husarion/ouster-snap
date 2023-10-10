@@ -1,7 +1,7 @@
 # ouster-ros
 
 > **Note**
-> This is unofficial snap provided by Husarion
+> This is an unofficial snap provided by Husarion
 
 This snap packages the [`husarion-ouster-ros2`](https://github.com/ouster-lidar/ouster-ros/tree/ros2) package.
 It thus conveniently offers all the ROS 2 stack necessary to bring up the [Ouster sensors](https://ouster.com/).
@@ -40,13 +40,17 @@ snap connect husarion-ouster-ros2:ros-humble ros-humble-ros-base
 
 ## Use
 
-This application runs as a daemon. To start it connect the `ros-humble` interface, set `sensor-hostname`.
-Next launch it aas follows.
+## Start
+
+This application runs as a daemon.
+To start it, connect the `ros-humble` interface if it isn't already and set the `sensor-hostname` variable as shown below.
+Next launch it as follows.
 ```bash
 snap start husarion-ouster-ros2
 ```
 
-If you want to rest the `$SNAP_COMMON/config/driver_params.yaml` file do it with following command.
+The configuration file is readily available at `$SNAP_COMMON/config/driver_params.yaml`.
+If you want to reset it, do it with following command,
 ```bash
 husarion-ouster-ros2.reset-config 
 ```
