@@ -49,7 +49,8 @@ Next launch it as follows.
 snap start ouster-ros
 ```
 
-If you want to rest the `$SNAP_COMMON/config/driver_params.yaml` file do it with following command.
+The configuration file is readily available at `$SNAP_COMMON/config/driver_params.yaml`.
+If you want to reset it, do it with following command,
 ```bash
 ouster-ros.reset-config 
 ```
