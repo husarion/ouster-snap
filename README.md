@@ -1,7 +1,7 @@
 # ouster-snap
 
 > **Note**
-> This is unofficial snap provided by Husarion
+> This is an unofficial snap provided by Husarion
 
 This snap packages the [`ouster-ros`](https://github.com/ouster-lidar/ouster-ros/tree/ros2) package.
 It thus conveniently offers all the ROS 2 stack necessary to bring up the [Ouster sensors](https://ouster.com/).
