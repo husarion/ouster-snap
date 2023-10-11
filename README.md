@@ -1,4 +1,4 @@
-# ouster-ros
+# ouster-snap
 
 > **Note**
 > This is an unofficial snap provided by Husarion
