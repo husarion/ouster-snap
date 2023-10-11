@@ -38,16 +38,8 @@ If it isn't, you can issue the following command,
 snap connect husarion-ouster-ros2:ros-humble ros-humble-ros-base
 ```
 
-## Use
 
-## Start
-
-This application runs as a daemon.
-To start it, connect the `ros-humble` interface if it isn't already and set the `sensor-hostname` variable as shown below.
-Next launch it as follows.
-```bash
-snap start husarion-ouster-ros2
-```
+This application runs as a daemon. To start it, connect the `ros-humble` interface if it isn't already and set the `sensor-hostname` variable as shown below. After doing so it will start automatically.
 
 The configuration file is readily available at `$SNAP_COMMON/config/driver_params.yaml`.
 If you want to reset it, do it with following command,
