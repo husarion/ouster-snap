@@ -1,0 +1,49 @@
+#!/bin/bash -e
+
+SENSOR_HOSTNAME="$(snapctl get sensor-hostname)"
+CONFIG_FILE="$(snapctl get config)"
+
+READY=true
+
+if [ -n "${CONFIG_FILE}" ]; then
+    if ! [[ -r "${CONFIG_FILE}" && -f "${CONFIG_FILE}" ]]; then
+        >&2 echo "'$CONFIG_FILE' is not a supported value for config."
+        logger -t ${SNAP_NAME} "'$CONFIG_FILE' is not a supported value for config. Restetting the config file"
+        # reset the config file
+        . $SNAP/usr/bin/reset_config.sh
+        exit 1
+    fi
+fi
+
+if [ -n "${SENSOR_HOSTNAME}" ]; then
+    # Check that ip is a valid value
+    if expr "${SENSOR_HOSTNAME}" : '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' > /dev/null; then
+        echo "Expecting LIDAR at the IP: '$SENSOR_HOSTNAME'." >&2
+    else
+        echo "Expecting LIDAR at a hostname: '$SENSOR_HOSTNAME'. Make sure it is correct!" >&2
+    fi
+fi
+
+if ! $($SNAP/usr/bin/is_sensor_hostname_set.sh); then
+    READY=false
+fi
+
+if ! $($SNAP/usr/bin/are_interfaces_plugged.sh); then
+    READY=false
+fi
+
+if [ "${READY}" = true ]; then
+    # We started originally with disabled service, make sure it is enabled
+    # since we are sure params are set and interfaces are connected
+    if snapctl services ${SNAP_NAME}.${SNAP_NAME} | grep -q inactive; then
+        snapctl start --enable ${SNAP_NAME}.${SNAP_NAME} 2>&1 || true
+        exit 0
+    fi
+    
+    # Service was already enabled, just restart it to make sure the new
+    # config values are picked up
+    snapctl restart ${SNAP_NAME}.${SNAP_NAME} 2>&1 || true
+fi
+
+
+

@@ -1,0 +1,73 @@
+name: husarion-ouster
+adopt-info: husarion-ouster
+license: Apache-2.0
+summary: The ROS 2 Ouster LIDAR snap
+description: |
+  Unofficial snap packaging ROS 2 node for Ouster LIDAR
+
+  Upon installation, the snap must be configured:
+
+    sudo snap set husarion-ouster sensor-hostname="<lidar sensor hostname>"
+
+  Optional parameter of config file path can be specified by:
+
+    sudo snap set husarion-ouster config="<lidar config file>"
+
+  Furthermore its interfaces must be connected:
+
+    sudo snap connect husarion-ouster:ros-humble ros-humble-ros-base
+
+  Once the snap is configured and connected,
+  it automatically start and launches the driver.
+
+grade: stable
+confinement: strict
+base: core22
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+
+contact: support@husarion.com
+issues: https://github.com/husarion/ouster-snap/issues
+website: https://github.com/husarion/ouster-snap
+
+apps:
+  husarion-ouster:
+    daemon: simple
+    install-mode: disable
+    plugs: [network, network-bind]
+    command: usr/bin/launcher.sh
+    extensions: [ros2-humble-ros-base]
+  
+  reset-config:
+    command: usr/bin/reset_config.sh
+
+parts:
+  husarion-ouster:
+    plugin: colcon
+    colcon-cmake-args:
+      - -DCMAKE_BUILD_TYPE=Release
+    source: https://github.com/ouster-lidar/ouster-ros.git
+    source-tag: 0.10.4
+    override-pull: |
+        craftctl default
+
+        version="$(grep -oP '(?<=<version>).*?(?=</version>)' $CRAFT_PART_SRC_WORK/ouster-ros/package.xml)"
+        craftctl set version="$version"
+
+  local-files:
+    plugin: dump
+    source: snap/local/
+    organize:
+      '*.sh': usr/bin/
+
+  install-yq:
+    plugin: dump
+    source: "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_$SNAPCRAFT_TARGET_ARCH"
+    source-type: file
+    override-build: |
+      craftctl default
+      chmod +x "$CRAFT_PART_INSTALL/yq_linux_$SNAPCRAFT_TARGET_ARCH"
+    organize:
+      "yq_linux_$SNAPCRAFT_TARGET_ARCH": usr/bin/yq
