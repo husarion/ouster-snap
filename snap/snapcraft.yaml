@@ -1,5 +1,5 @@
-name: husarion-ouster-ros2
-adopt-info: husarion-ouster-ros2
+name: husarion-ouster
+adopt-info: husarion-ouster
 license: Apache-2.0
 summary: The ROS 2 Ouster LIDAR snap
 description: |
@@ -7,15 +7,15 @@ description: |
 
   Upon installation, the snap must be configured:
 
-    sudo snap set husarion-ouster-ros2 sensor-hostname="<lidar sensor hostname>"
+    sudo snap set husarion-ouster sensor-hostname="<lidar sensor hostname>"
 
   Optional parameter of config file path can be specified by:
 
-    sudo snap set husarion-ouster-ros2 config="<lidar config file>"
+    sudo snap set husarion-ouster config="<lidar config file>"
 
   Furthermore its interfaces must be connected:
 
-    sudo snap connect husarion-ouster-ros2:ros-humble ros-humble-ros-base
+    sudo snap connect husarion-ouster:ros-humble ros-humble-ros-base
 
   Once the snap is configured and connected,
   it automatically start and launches the driver.
@@ -33,7 +33,7 @@ issues: https://github.com/husarion/ouster-snap/issues
 website: https://github.com/husarion/ouster-snap
 
 apps:
-  husarion-ouster-ros2:
+  husarion-ouster:
     daemon: simple
     install-mode: disable
     plugs: [network, network-bind]
@@ -44,7 +44,7 @@ apps:
     command: usr/bin/reset_config.sh
 
 parts:
-  husarion-ouster-ros2:
+  husarion-ouster:
     plugin: colcon
     colcon-cmake-args:
       - -DCMAKE_BUILD_TYPE=Release
