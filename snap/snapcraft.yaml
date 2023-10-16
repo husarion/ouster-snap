@@ -61,13 +61,3 @@ parts:
     source: snap/local/
     organize:
       '*.sh': usr/bin/
-
-  install-yq:
-    plugin: dump
-    source: "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_$SNAPCRAFT_TARGET_ARCH"
-    source-type: file
-    override-build: |
-      craftctl default
-      chmod +x "$CRAFT_PART_INSTALL/yq_linux_$SNAPCRAFT_TARGET_ARCH"
-    organize:
-      "yq_linux_$SNAPCRAFT_TARGET_ARCH": usr/bin/yq
