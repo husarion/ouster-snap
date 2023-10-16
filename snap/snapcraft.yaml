@@ -55,6 +55,9 @@ parts:
 
         version="$(grep -oP '(?<=<version>).*?(?=</version>)' $CRAFT_PART_SRC_WORK/ouster-ros/package.xml)"
         craftctl set version="$version"
+    override-prime: |
+      snapcraftctl prime
+      rm -vf usr/lib/jvm/java-11-openjdk-*/lib/security/blacklisted.certs
 
   local-files:
     plugin: dump
