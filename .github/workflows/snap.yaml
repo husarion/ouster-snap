@@ -45,9 +45,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Install dependencies preventing upload to the store
-      run: sudo apt-get install -y openjdk-8-jre-headless ca-certificates-java
-
     # Retrieve the snap
     - uses: actions/download-artifact@v3
       with:
