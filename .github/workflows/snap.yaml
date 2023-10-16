@@ -57,8 +57,16 @@ jobs:
     # Publish the snap on the store
     # by default on 'edge' but on 'candidate' for tags
     - uses: snapcore/action-publish@v1
+      id: publish_snap
       env:
         SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
       with:
         snap: ${{needs.build.outputs.snap-file}}
         release: ${{ startsWith(github.ref, 'refs/tags/') && 'candidate' || 'edge'}}
+
+    # Print the log file if the publish step fails
+    - name: Print Snapcraft Log
+      if: failure() && steps.publish_snap.outcome == 'failure'
+      run: |
+        ls -la /home/runner/.local/state/snapcraft/log/
+        cat /home/runner/.local/state/snapcraft/log/*.log
