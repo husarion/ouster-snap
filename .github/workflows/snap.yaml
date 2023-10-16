@@ -45,6 +45,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    # install dependencies preventing the snap to be set to the store
+    - name: Install dependencies
+      run: sudo apt-get install -y openjdk-11-jre-headless ca-certificates-java ca-certificates
+
     # Retrieve the snap
     - uses: actions/download-artifact@v3
       with:
